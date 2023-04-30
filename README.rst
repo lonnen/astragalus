@@ -2,7 +2,7 @@
 ASTRAGALUS
 ==========
 
-An set of utilities for playing `Cult of the Lamb <https://www.cultofthelamb.com/>`'s minigame `Knucklebones <https://cult-of-the-lamb.fandom.com/wiki/Knucklebones>`.
+An set of utilities for playing `Cult of the Lamb <https://www.cultofthelamb.com/>`_'s minigame `Knucklebones <https://cult-of-the-lamb.fandom.com/wiki/Knucklebones>`_.
 
 :Code:          https://github.com/lonnen/astragalus
 :Issues:        https://github.com/lonnen/astragalus/issues
