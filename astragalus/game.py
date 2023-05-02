@@ -3,10 +3,7 @@ from itertools import chain
 
 class KnucklebonesGame(object):
     def __init__(self):
-        self.board = [
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-        ]  # 2x3x3
+
 
     def valid_moves(self):
         rows = [self.board[i : i + 3] for i in range(0, len(self.board), 3)]
@@ -20,10 +17,10 @@ class KnucklebonesGame(object):
         return any(all(cell is not 0 for cell in board) for board in boards)
 
     def make_move(self, move):
-        pass
+        self.moves.push()
 
     def undo_move(self):
-        pass
+        self.moves.pop()
 
     def score(self):
         return 0
@@ -37,4 +34,31 @@ class KnucklebonesGame(object):
 
     def copy(self):
         #return self.load(self.state())
+        pass
+
+class KnucklebonesBoard(object):
+    def __init__(self):
+        self.raw_board = [0] * 18 # 2x3x3
+        self.moves = []
+
+    def rows(self):
+        return list(zip(*[iter(self.raw_board)]*3))
+
+    def boards(self):
+        return list(zip(*[iter(self.rows())]*3))
+
+    def generate_legal_moves(self):
+        empty_spaces = [index for (index, cell) in enumerate(self.board) if cell == 0]
+        return
+
+    def is_game_over():
+        pass
+
+    def push(move):
+        pass
+
+    def pop():
+        """
+        Restores the previous board position
+        """
         pass
