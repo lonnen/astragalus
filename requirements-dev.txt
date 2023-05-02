@@ -1,0 +1,15 @@
+# These are the test/dev requirements
+.
+
+black
+flake8
+
+# for tests
+pytest
+tox
+
+# for ci
+tox-gh-actions
+
+# to build docs
+Sphinx
