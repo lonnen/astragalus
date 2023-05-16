@@ -3,7 +3,7 @@ from itertools import chain
 
 class KnucklebonesGame(object):
     def __init__(self):
-        pass
+        self.game = KnucklebonesBoard()
 
     def valid_moves(self):
         rows = [self.board[i : i + 3] for i in range(0, len(self.board), 3)]
