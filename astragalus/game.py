@@ -6,15 +6,10 @@ class KnucklebonesGame(object):
         self.game = KnucklebonesBoard()
 
     def valid_moves(self):
-        rows = [self.board[i : i + 3] for i in range(0, len(self.board), 3)]
-        empty_spaces = [index for (index, cell) in enumerate(self.board) if cell == 0]
-        # incomplete
-        return []
+        return self.game.generate_legal_moves()
 
     def over(self):
-        """Check to see if either player board is full, indicating the game is over"""
-        boards = [chain.from_iterable(player_board) for player_board in self.board]
-        return any(all(cell is not 0 for cell in board) for board in boards)
+        return self.game.is_game_over()
 
     def make_move(self, move):
         self.moves.push()
@@ -23,18 +18,20 @@ class KnucklebonesGame(object):
         self.moves.pop()
 
     def score(self):
-        return 0
+        '''Positive score means player 1 is ahead,
+        negative score means player 2'''
+        p1, p2 = self.game.scores()
+        return p1 - p2
 
     def state(self):
-        pass
+        return self.game.state()
 
     @classmethod
     def load(cls, self):
         pass
 
     def copy(self):
-        #return self.load(self.state())
-        pass
+        return self.load(self.state())
 
 class KnucklebonesBoard(object):
     def __init__(self):
@@ -48,8 +45,12 @@ class KnucklebonesBoard(object):
         return list(zip(*[iter(self.rows())]*3))
 
     def generate_legal_moves(self):
-        empty_spaces = [index for (index, cell) in enumerate(self.board) if cell == 0]
-        return
+        """Check to see if either player board is full, indicating the game is over"""
+        #rows = [self.board[i : i + 3] for i in range(0, len(self.board), 3)]
+        #empty_spaces = [index for (index, cell) in enumerate(self.board) if cell == 0]
+        boards = [chain.from_iterable(player_board) for player_board in self.board]
+        return any(all(cell is not 0 for cell in board) for board in boards)
+
 
     def is_game_over():
         pass
