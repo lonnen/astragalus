@@ -52,12 +52,12 @@ class KnucklebonesBoard(object):
         boards = [chain.from_iterable(player_board) for player_board in self.board]
         return any(all(cell is not 0 for cell in board) for board in boards)
 
-    def is_game_over():
+    def is_game_over(self) -> bool:
         pass
 
-    def push(move):
-        pass
+    def push(self, move) -> None:
+        self.moves.push(move)
 
-    def pop():
+    def pop(self) -> None:
         """Restores the previous board position"""
         pass
