@@ -1,6 +1,7 @@
 from itertools import chain
 
-PLAYERS = [PROTAGONIST,ANTAGONIST] = [True, False]
+PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
+
 
 class KnucklebonesGame(object):
     def __init__(self):
@@ -37,15 +38,10 @@ class KnucklebonesGame(object):
 
 class KnucklebonesBoard(object):
     def __init__(self):
-        self.raw_board = [0] * 18  # 2x3x3
+        self.raw_board = board = [0] * 18  # 2x3x3
+        self.boards = (board[: (len(board) // 2)], board[(len(board) // 2) :])
         self.moves = []
         self.turn = PROTAGONIST
-
-    def rows(self):
-        return list(zip(*[iter(self.raw_board)] * 3))
-
-    def boards(self):
-        return list(zip(*[iter(self.rows())] * 3))
 
     def generate_legal_moves(self):
         """Check to see if either player board is full, indicating the game is over"""
@@ -55,7 +51,7 @@ class KnucklebonesBoard(object):
         return any(all(cell is not 0 for cell in board) for board in boards)
 
     def is_game_over(self) -> bool:
-        pass
+        board_size = len(self.raw_board)
 
     def push(self, column) -> None:
         # calculate the
@@ -66,5 +62,8 @@ class KnucklebonesBoard(object):
         """Restores the previous board position"""
         self.turn = not self.turn
         move = self.moves.pop()
-
         # reverse apply the move
+
+    def scores(self):
+        """The score is the sum of the pieces of each board"""
+        return (sum(board) for board in self.boards)
