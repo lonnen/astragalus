@@ -14,17 +14,17 @@ class KnucklebonesGame(object):
     def over(self):
         return self.game.is_game_over()
 
-    def make_move(self, move):
-        self.moves.push()
-
-    def undo_move(self):
-        self.moves.pop()
-
     def score(self):
         """Positive score means player 1 is ahead,
         negative score means player 2"""
         p1, p2 = self.game.scores()
         return p1 - p2
+
+    def make_move(self, move):
+        self.moves.push()
+
+    def undo_move(self):
+        self.moves.pop()
 
     def state(self):
         return self.game.state()
