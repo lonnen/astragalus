@@ -52,10 +52,12 @@ class KnucklebonesBoard(object):
         return any(all(cell is not 0 for cell in board) for board in boards)
 
     def is_game_over(self) -> bool:
-        board_size = len(self.raw_board)
+        """the game is over when either board is full"""
+        return any(all(board) for board in self.boards)
 
     def push(self, column) -> None:
-        # calculate the
+        # calculate the move
+
         self.turn = not self.turn
         self.moves.push(column)
 
