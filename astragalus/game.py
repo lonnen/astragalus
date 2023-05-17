@@ -1,5 +1,6 @@
 from itertools import chain
 
+PLAYERS = [PROTAGONIST,ANTAGONIST] = [True, False]
 
 class KnucklebonesGame(object):
     def __init__(self):
@@ -38,6 +39,7 @@ class KnucklebonesBoard(object):
     def __init__(self):
         self.raw_board = [0] * 18  # 2x3x3
         self.moves = []
+        self.turn = PROTAGONIST
 
     def rows(self):
         return list(zip(*[iter(self.raw_board)] * 3))
@@ -55,9 +57,14 @@ class KnucklebonesBoard(object):
     def is_game_over(self) -> bool:
         pass
 
-    def push(self, move) -> None:
-        self.moves.push(move)
+    def push(self, column) -> None:
+        # calculate the
+        self.turn = not self.turn
+        self.moves.push(column)
 
     def pop(self) -> None:
         """Restores the previous board position"""
-        pass
+        self.turn = not self.turn
+        move = self.moves.pop()
+
+        # reverse apply the move
