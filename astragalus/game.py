@@ -1,4 +1,5 @@
 from itertools import chain
+from typing import List, Tuple
 
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
 
@@ -64,6 +65,6 @@ class KnucklebonesBoard(object):
         move = self.moves.pop()
         # reverse apply the move
 
-    def scores(self):
+    def scores(self) -> Tuple[int, int]:
         """The score is the sum of the pieces of each board"""
         return (sum(board) for board in self.boards)
