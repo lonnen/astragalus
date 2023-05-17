@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import List, Tuple
+from typing import List, Tuple, Int
 
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
 
@@ -41,15 +41,13 @@ class KnucklebonesBoard(object):
     def __init__(self):
         self.raw_board = board = [0] * 18  # 2x3x3
         self.boards = (board[: (len(board) // 2)], board[(len(board) // 2) :])
+        self.rows = (self.board[i : i + 3] for i in range(0, len(self.board), 3))
         self.moves = []
         self.turn = PROTAGONIST
 
-    def generate_legal_moves(self):
-        """Check to see if either player board is full, indicating the game is over"""
-        # rows = [self.board[i : i + 3] for i in range(0, len(self.board), 3)]
-        # empty_spaces = [index for (index, cell) in enumerate(self.board) if cell == 0]
-        boards = [chain.from_iterable(player_board) for player_board in self.board]
-        return any(all(cell is not 0 for cell in board) for board in boards)
+    def generate_legal_moves(self) -> List[Int]:
+        """Return the index of any row with space for another number"""
+        return [index for (index, row) in enumerate(self.rows) if 0 in row]
 
     def is_game_over(self) -> bool:
         """the game is over when either board is full"""
