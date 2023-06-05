@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import List, Tuple, Int
+from typing import List, Tuple
 
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
 
@@ -45,7 +45,7 @@ class KnucklebonesBoard(object):
         self.moves = []
         self.turn = PROTAGONIST
 
-    def generate_legal_moves(self) -> List[Int]:
+    def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
         return [index for (index, row) in enumerate(self.rows) if 0 in row]
 
