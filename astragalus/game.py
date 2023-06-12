@@ -58,17 +58,44 @@ class KnucklebonesBoard(object):
         return any(all(board) for board in self.boards)
 
     def push(self, column, dice_roll) -> None:
-        board = self.boards[(0 if self.turn is PROTAGONIST else 1)]
-        other_board = self.boards[(0 if self.turn is ANTAGONIST else 1)]
+        move = {}
+
+        board_number = (0 if self.turn is PROTAGONIST else 1)
+        board = self.boards[board_number]
+        row = board[column].index(0)
+
+        move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
+
+        # caclulate any placement cancelled out on the opposing board
+        other_board = self.boards[(board_number + 1) % 2]
+
+        cancelled_placements = (pos for pos, value in enumerate(other_board[column]) if value == dice_roll)
+
+        for cancellation in cancelled_placements:
+            move[self.relative_positon_to_raw_board_position(board, column, cancellation)] = 0
+
+        # apply the move
+        for position, value in move:
+            self.raw_board[position] = value
 
         self.turn = not self.turn
-        self.moves.push(column)
+        self.moves.push(move)
 
     def pop(self) -> None:
         """Restores the previous board position"""
         self.turn = not self.turn
         move = self.moves.pop()
+
         # reverse apply the move
+        val = 0
+        positions_to_zero = []
+        positions_to_restore = []
+        for position, value in move.items():
+            if value > 0:
+                val = value
+                positions_to_zero.append(position)
+            else:
+                positions_to_restore.append(position)
 
     def scores(self) -> Tuple[int, int]:
         """The score is the sum of the pieces of each board"""
