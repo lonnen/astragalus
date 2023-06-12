@@ -83,8 +83,8 @@ class KnucklebonesBoard(object):
 
     def pop(self) -> None:
         """Restores the previous board position"""
-        self.turn = not self.turn
         move = self.moves.pop()
+        self.turn = not self.turn
 
         # reverse apply the move
         val = 0
