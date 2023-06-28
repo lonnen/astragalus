@@ -40,8 +40,16 @@ class KnucklebonesGame(object):
 class KnucklebonesBoard(object):
     def __init__(self):
         self.raw_board = board = [0] * 18  # 2x3x3
-        self.boards = (board[: (len(board) // 2)], board[(len(board) // 2) :])
-        self.columns = (self.board[i : i + 3] for i in range(0, len(self.board), 3))
+        self.boards = [
+            [[0, 0, 0],
+             [0, 0, 0],
+             [0, 0, 0]],
+
+            [[0, 0, 0],
+             [0, 0, 0],
+             [0, 0, 0]],
+        ]
+
         self.moves = []
         self.turn = PROTAGONIST
 
