@@ -101,5 +101,7 @@ class KnucklebonesBoard(object):
                 positions_to_restore.append(position)
 
     def scores(self) -> Tuple[int, int]:
-        """The score is the sum of the pieces of each board"""
-        return (sum(board) for board in self.boards)
+        """The sum of the values of each dice multiplied by the number of
+        dice of that value in its column, i.e. 1-2-3 is 1x1 + 2x1 + 3x1 = 6,
+        and 4-1-4 is 4x2 + 1x1 + 4x2 = 17."""
+        return (sum(board) for board in self.boards) # fixme
