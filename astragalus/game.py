@@ -1,3 +1,5 @@
+from collections import Counter
+
 from itertools import chain
 from typing import List, Tuple
 
@@ -104,4 +106,8 @@ class KnucklebonesBoard(object):
         """The sum of the values of each dice multiplied by the number of
         dice of that value in its column, i.e. 1-2-3 is 1x1 + 2x1 + 3x1 = 6,
         and 4-1-4 is 4x2 + 1x1 + 4x2 = 17."""
-        return (sum(board) for board in self.boards) # fixme
+        scores = []
+        for board in self.boards:
+            for column in board.columns:
+                scores.append(sum([value * count * count for (value, count) in Counter(column).items()]))
+        return scores
