@@ -39,7 +39,6 @@ class KnucklebonesGame(object):
 
 class KnucklebonesBoard(object):
     def __init__(self):
-        self.raw_board = board = [0] * 18  # 2x3x3
         self.boards = [
             [[0, 0, 0],
              [0, 0, 0],
@@ -52,10 +51,6 @@ class KnucklebonesBoard(object):
 
         self.moves = []
         self.turn = PROTAGONIST
-
-    @staticmethod
-    def relative_positon_to_raw_board_position(board, column, row):
-        return (board * 3 * 3) + (column * 3) + row
 
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
@@ -72,7 +67,7 @@ class KnucklebonesBoard(object):
         board = self.boards[board_number]
         row = board[column].index(0)
 
-        move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
+        #move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
 
         # caclulate any placement cancelled out on the opposing board
         other_board = self.boards[(board_number + 1) % 2]
