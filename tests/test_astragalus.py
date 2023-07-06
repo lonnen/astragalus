@@ -16,4 +16,13 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(positions, list(range(2 * 3 * 3)))
 
     def test_board(self):
-        assert True
+        rolls = [1,3,2,3,3]
+        board = KnucklebonesBoard()
+        raw_board_states = []
+        for roll in rolls:
+            board.push(1, roll)
+            board.raw_board.copy()
+
+        for s in raw_board_states[:-1]:
+            board.pop()
+            self.assertEqual(s, board.raw_board)
