@@ -42,13 +42,8 @@ class KnucklebonesGame(object):
 class KnucklebonesBoard(object):
     def __init__(self):
         self.boards = [
-            [[0, 0, 0],
-             [0, 0, 0],
-             [0, 0, 0]],
-
-            [[0, 0, 0],
-             [0, 0, 0],
-             [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
         ]
 
         self.moves = []
@@ -65,19 +60,21 @@ class KnucklebonesBoard(object):
     def push(self, column, dice_roll) -> None:
         move = {}
 
-        board_number = (0 if self.turn is PROTAGONIST else 1)
+        board_number = 0 if self.turn is PROTAGONIST else 1
         board = self.boards[board_number]
         row = board[column].index(0)
 
-        #move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
+        # move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
 
         # caclulate any placement cancelled out on the opposing board
         other_board = self.boards[(board_number + 1) % 2]
 
-        cancelled_placements = (pos for pos, value in enumerate(other_board[column]) if value == dice_roll)
+        cancelled_placements = (
+            pos for pos, value in enumerate(other_board[column]) if value == dice_roll
+        )
 
         for cancellation in cancelled_placements:
-            move[self.relative_positon_to_raw_board_position(board, column, cancellation)] = 0
+            # move[self.relative_positon_to_raw_board_position(board, column, cancellation)] = 0
 
         # apply the move
         for position, value in move:
@@ -109,5 +106,12 @@ class KnucklebonesBoard(object):
         scores = []
         for board in self.boards:
             for column in board.columns:
-                scores.append(sum([value * count * count for (value, count) in Counter(column).items()]))
+                scores.append(
+                    sum(
+                        [
+                            value * count * count
+                            for (value, count) in Counter(column).items()
+                        ]
+                    )
+                )
         return scores
