@@ -75,6 +75,7 @@ class KnucklebonesBoard(object):
 
         for cancellation in cancelled_placements:
             # move[self.relative_positon_to_raw_board_position(board, column, cancellation)] = 0
+            pass
 
         # apply the move
         for position, value in move:
