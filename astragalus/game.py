@@ -58,6 +58,7 @@ class KnucklebonesBoard(object):
         return any(all(board) for board in self.boards)
 
     def push(self, column, dice_roll) -> None:
+        column -= 1
         board_number = 0 if self.turn is PROTAGONIST else 1
         opposing_board_number = (board_number + 1) % 2
 
