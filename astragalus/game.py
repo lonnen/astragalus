@@ -58,31 +58,27 @@ class KnucklebonesBoard(object):
         return any(all(board) for board in self.boards)
 
     def push(self, column, dice_roll) -> None:
-        move = {}
-
         board_number = 0 if self.turn is PROTAGONIST else 1
-        board = self.boards[board_number]
-        row = board[column].index(0)
+        opposing_board_number = (board_number + 1) % 2
 
-        # move[self.relative_positon_to_raw_board_position(board, column, row)] = dice_roll
+        board_column = self.boards[board_number][column]
+        position = board_column[board_column.index(0)]
 
         # caclulate any placement cancelled out on the opposing board
-        other_board = self.boards[(board_number + 1) % 2]
+        other_board = self.boards[opposing_board_number]
 
-        cancelled_placements = (
+        cancelled_positions = [
             pos for pos, value in enumerate(other_board[column]) if value == dice_roll
-        )
-
-        for cancellation in cancelled_placements:
-            # move[self.relative_positon_to_raw_board_position(board, column, cancellation)] = 0
-            pass
+        ]
 
         # apply the move
-        for position, value in move:
-            self.raw_board[position] = value
+        position = dice_roll
+        for cancellation in cancelled_positions:
+            other_board[column][cancellation] = 0
 
+        # cycle turn
         self.turn = not self.turn
-        self.moves.append(move)
+        self.moves.append([column, dice_roll, *cancelled_positions])
 
     def pop(self) -> None:
         """Restores the previous board position"""
