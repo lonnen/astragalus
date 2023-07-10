@@ -61,8 +61,9 @@ class KnucklebonesBoard(object):
         board_number = 0 if self.turn is PROTAGONIST else 1
         opposing_board_number = (board_number + 1) % 2
 
-        board_column = self.boards[board_number][column]
-        position = board_column[board_column.index(0)]
+        board = self.boards[board_number]
+        board_column = board[column]
+        board_column[board_column.index(0)] = dice_roll
 
         # caclulate any placement cancelled out on the opposing board
         other_board = self.boards[opposing_board_number]
@@ -72,7 +73,6 @@ class KnucklebonesBoard(object):
         ]
 
         # apply the move
-        position = dice_roll
         for cancellation in cancelled_positions:
             other_board[column][cancellation] = 0
 
@@ -82,19 +82,22 @@ class KnucklebonesBoard(object):
 
     def pop(self) -> None:
         """Restores the previous board position"""
-        move = self.moves.pop()
-        self.turn = not self.turn
+        column, dice_roll, *cancelled_positions = self.moves.pop()
 
-        # reverse apply the move
-        val = 0
-        positions_to_zero = []
-        positions_to_restore = []
-        for position, value in move.items():
-            if value > 0:
-                val = value
-                positions_to_zero.append(position)
-            else:
-                positions_to_restore.append(position)
+        board_number = 0 if self.turn is PROTAGONIST else 1
+        opposing_board_number = (board_number + 1) % 2
+
+        board_column = self.boards[board_number][column]
+
+        # undo the move
+        board_column[board_column.index(dice_roll)] = 0
+
+        # undo the cancellations
+        other_board = self.boards[opposing_board_number]
+        for cancellation in cancelled_positions:
+            other_board[column][dice_roll]
+
+        self.turn = not self.turn
 
     def scores(self) -> Tuple[int, int]:
         """The sum of the values of each dice multiplied by the number of
