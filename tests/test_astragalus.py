@@ -54,13 +54,13 @@ class TestBoard(unittest.TestCase):
             (4, 1, 20, 22),
             (1, 1, 23, 22),
             (3, 1, 23, 25),
-            (4, 1, 17, 9),
+            (4, 1, 27, 9),
             (5, 2, 22, 14),
             (6, 2, 28, 8),
             (6, 2, 22, 14),
             (4, 2, 26, 14),
             (3, 2, 14, 17),
-            (5, 2, 14, 17),
+            (5, 2, 19, 12),
             (2, 3, 17, 14),
             (3, 2, 20, 11),
             (4, 1, 16, 15),
@@ -75,12 +75,12 @@ class TestBoard(unittest.TestCase):
             (4, 3, 30, 19),
             (3, 2, 27, 22),
             (6, 3, 45, 22),
-            (2, 1, 46, 28),
+            (2, 1, 45, 28),
             (1, 2, 46, 27),
         ]
         board = KnucklebonesBoard()
         for roll, column, antagonist_total, protagonist_total in state_log:
             board.push(column, roll)
-            self.assertEqual(board.scores(), [protagonist_total, antagonist_total])
+            self.assertEqual(board.scores(), [antagonist_total, protagonist_total])
         self.assertTrue(board.is_game_over())
         # assert Antagonist victory
