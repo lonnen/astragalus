@@ -15,18 +15,6 @@ class TestBoard(unittest.TestCase):
 
         self.assertEqual(positions, list(range(2 * 3 * 3)))
 
-    def test_board(self):
-        rolls = [1,3,2,3,3]
-        board = KnucklebonesBoard()
-        raw_board_states = []
-        for roll in rolls:
-            board.push(1, roll)
-            board.raw_board.copy()
-
-        for s in raw_board_states[:-1]:
-            board.pop()
-            self.assertEqual(s, board.raw_board)
-
     def test_game(self):
         '''verify that the game board can match the inputs and outputs of a
         playthrough from Jul 6, 2023 against Shrumy, ending in victory for
@@ -84,3 +72,6 @@ class TestBoard(unittest.TestCase):
             self.assertEqual(board.scores(), [antagonist_total, protagonist_total])
         self.assertTrue(board.is_game_over())
         # assert Antagonist victory
+
+        def test_pop(self):
+            pass
