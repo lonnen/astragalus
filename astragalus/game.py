@@ -106,13 +106,11 @@ class KnucklebonesBoard(object):
         and 4-1-4 is 4x2 + 1x1 + 4x2 = 17."""
         scores = []
         for board in self.boards:
+            board_score = 0
             for column in board:
-                scores.append(
-                    sum(
-                        [
-                            value * count * count
-                            for (value, count) in Counter(column).items()
-                        ]
-                    )
-                )
+                board_score += sum([
+                    value * count * count
+                    for (value, count) in Counter(column).items()
+                ])
+            scores.append(board_score)
         return scores
