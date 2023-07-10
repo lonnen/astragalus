@@ -81,6 +81,6 @@ class TestBoard(unittest.TestCase):
         board = KnucklebonesBoard()
         for roll, column, antagonist_total, protagonist_total in state_log:
             board.push(column, roll)
-            self.assertEqual(board.scores(), (protagonist_total, antagonist_total))
+            self.assertEqual(board.scores(), [protagonist_total, antagonist_total])
         self.assertTrue(board.is_game_over())
         # assert Antagonist victory
