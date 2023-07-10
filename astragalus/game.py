@@ -82,7 +82,7 @@ class KnucklebonesBoard(object):
             self.raw_board[position] = value
 
         self.turn = not self.turn
-        self.moves.push(move)
+        self.moves.append(move)
 
     def pop(self) -> None:
         """Restores the previous board position"""
