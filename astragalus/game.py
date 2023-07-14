@@ -79,11 +79,13 @@ class KnucklebonesBoard(object):
 
         # cycle turn
         self.turn = not self.turn
-        self.moves.append([column, dice_roll, *cancelled_positions])
+        self.moves.append([column+1, dice_roll, *cancelled_positions])
 
     def pop(self) -> None:
         """Restores the previous board position"""
         column, dice_roll, *cancelled_positions = self.moves.pop()
+        column -= 1
+        self.turn = not self.turn
 
         board_number = 0 if self.turn is PROTAGONIST else 1
         opposing_board_number = (board_number + 1) % 2
@@ -95,10 +97,9 @@ class KnucklebonesBoard(object):
 
         # undo the cancellations
         other_board = self.boards[opposing_board_number]
+        other_column = other_board[column]
         for cancellation in cancelled_positions:
-            other_board[column][dice_roll]
-
-        self.turn = not self.turn
+            other_column[other_column.index(0)] = dice_roll
 
     def scores(self) -> Tuple[int, int]:
         """The sum of the values of each dice multiplied by the number of
