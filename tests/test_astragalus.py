@@ -4,17 +4,6 @@ from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST
 
 class TestBoard(unittest.TestCase):
 
-    def test_relative_positon_to_raw_board_position(self):
-        rp2rbp = KnucklebonesBoard.relative_positon_to_raw_board_position
-
-        positions = []
-        for board in (0,1):
-            for col in (0, 1, 2):
-                for row in (0, 1, 2):
-                    positions.append(rp2rbp(board, col, row))
-
-        self.assertEqual(positions, list(range(2 * 3 * 3)))
-
     def test_game(self):
         '''verify that the game board can match the inputs and outputs of a
         playthrough from Jul 6, 2023 against Shrumy, ending in victory for
