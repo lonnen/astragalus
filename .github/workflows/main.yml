@@ -30,7 +30,7 @@ jobs:
       - name: linters
         run: |
           black --check --verbose .
-          flake8 tests/ veritas/ setup.py
+          flake8 tests/ astragalus/ setup.py
 
       - name: Run tests
         run: tox
