@@ -51,7 +51,8 @@ class KnucklebonesBoard(object):
 
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
-        return [index for (index, col) in enumerate(self.columns) if 0 in col]
+        board = self.boards[0 if self.turn is PROTAGONIST else 1]
+        return tuple(index + 1 for (index, col) in enumerate(board) if 0 in col)
 
     def is_game_over(self) -> bool:
         """the game is over when either board is full"""
@@ -79,7 +80,7 @@ class KnucklebonesBoard(object):
 
         # cycle turn
         self.turn = not self.turn
-        self.moves.append([column+1, dice_roll, *cancelled_positions])
+        self.moves.append([column + 1, dice_roll, *cancelled_positions])
 
     def pop(self) -> None:
         """Restores the previous board position"""
@@ -109,9 +110,11 @@ class KnucklebonesBoard(object):
         for board in self.boards:
             board_score = 0
             for column in board:
-                board_score += sum([
-                    value * count * count
-                    for (value, count) in Counter(column).items()
-                ])
+                board_score += sum(
+                    [
+                        value * count * count
+                        for (value, count) in Counter(column).items()
+                    ]
+                )
             scores.append(board_score)
         return scores
