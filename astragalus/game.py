@@ -1,6 +1,5 @@
 from collections import Counter
 
-from itertools import chain
 from typing import List, Tuple
 
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
@@ -52,7 +51,7 @@ class KnucklebonesBoard(object):
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
         board = self.boards[0 if self.turn is PROTAGONIST else 1]
-        return tuple(index + 1 for (index, col) in enumerate(board) if 0 in col)
+        return tuple(i + 1 for (i, col) in enumerate(board) if 0 in col)
 
     def is_game_over(self) -> bool:
         """the game is over when either board is full"""
@@ -100,7 +99,7 @@ class KnucklebonesBoard(object):
         # undo the cancellations
         other_board = self.boards[opposing_board_number]
         other_column = other_board[column]
-        for cancellation in cancelled_positions:
+        for _ in cancelled_positions:
             other_column[other_column.index(0)] = dice_roll
 
     def scores(self) -> Tuple[int, int]:
