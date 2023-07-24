@@ -16,8 +16,7 @@ class KnucklebonesGame(object):
         return self.game.is_game_over()
 
     def score(self):
-        """Positive score means  is ahead,
-        negative score means player 2"""
+        """Positive score means  is ahead, negative score means player 2"""
         protagonist, antagonist = self.game.scores()
         return protagonist - antagonist
 
