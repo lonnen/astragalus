@@ -1,6 +1,6 @@
 import unittest
 
-from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST
+from astragalus import KnucklebonesBoard, ANTAGONIST
 
 
 class TestBoard(unittest.TestCase):
@@ -66,11 +66,11 @@ class TestBoard(unittest.TestCase):
     def test_pop(self):
         """verify that a game in its end state can be undone step by step"""
         board = KnucklebonesBoard()
-        for roll, column, antagonist_total, protagonist_total, _ in self.state_log:
+        for roll, column, _, _, _ in self.state_log:
             board.push(column, roll)
 
         # now again, in reverse!
-        for roll, column, ant_total, pro_total, _ in self.state_log[::-1][1:]:
+        for _, _, ant_total, pro_total, _ in self.state_log[::-1][1:]:
             board.pop()
             self.assertEqual(board.scores(), [ant_total, pro_total])
 
