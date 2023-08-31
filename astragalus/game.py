@@ -5,7 +5,7 @@ A library for implementin and exploring states of the minigame Knucklebones from
 from collections import Counter
 import dataclasses
 
-from typing import List, Tuple, Literal
+from typing import List, Tuple, Literal, Optional
 
 Player = bool
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
@@ -28,6 +28,21 @@ Into a single LON String:
     0001112223334445500
 
 """
+
+
+@dataclasses.dataclass
+class Outcome:
+    """
+    Information about the outcome of a finished game
+    """
+
+    termination: bool
+    winner: Optional[Player]
+
+    def result(self) -> str:
+        """Returns the human-readable indicator of the winner
+        """
+        return "Protagonist" if self.winner else "Antagonist"
 
 
 class KnucklebonesGame(object):
