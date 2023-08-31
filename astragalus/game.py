@@ -129,6 +129,20 @@ class KnucklebonesBoard(object):
         return scores
 
     def state(self):
+        '''Board state serializes compactly from:
+
+        Protagonist Antagonist*
+        0 1 2       3 4 5
+        0 1 2       3 4 5
+        0 1 2       3 4 0
+
+        Into a single string:
+
+        0001112223334445501
+
+        Where the final bit indiciates which player is active (the Antagonist,
+        in this case)
+        '''
         state = [
             roll for roll in [column for column in [board for board in self.boards]]
         ]
