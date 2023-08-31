@@ -45,6 +45,14 @@ class Outcome:
         return "Protagonist" if self.winner else "Antagonist"
 
 
+class InvalidMoveError(ValueError):
+    """Raised when move notation is not syntactically valid"""
+
+
+class IllegalMoveError(ValueError):
+    """Raised when the attempted move is illegal in the current position"""
+
+
 class KnucklebonesGame(object):
     def __init__(self):
         self.game = KnucklebonesBoard()
