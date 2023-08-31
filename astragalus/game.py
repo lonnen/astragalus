@@ -3,6 +3,7 @@ A library for implementin and exploring states of the minigame Knucklebones from
 """
 
 from collections import Counter
+import dataclasses
 
 from typing import List, Tuple, Literal
 
@@ -26,10 +27,6 @@ Into a single LON String:
 
     0001112223334445500
 
-"""
-
-STARTING_BOARD_POSITION = "000000000000000000"
-"""The board portion of the LON for the standard Knucklebones starting position
 """
 
 
