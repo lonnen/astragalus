@@ -4,9 +4,12 @@ A library for implementin and exploring states of the minigame Knucklebones from
 
 from collections import Counter
 
-from typing import List, Tuple
+from typing import List, Tuple, Literal
 
+Player = bool
 PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
+PlayerName = Literal["protagonist", "antagonist"]
+PLAYER_NAMES: List[PlayerName] = ["protagonist", "antagonist"]
 
 
 class KnucklebonesGame(object):
