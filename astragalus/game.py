@@ -11,6 +11,27 @@ PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
 PlayerName = Literal["protagonist", "antagonist"]
 PLAYER_NAMES: List[PlayerName] = ["protagonist", "antagonist"]
 
+STARTING_POSITION = "0000000000000000000"
+"""The standard starting position for a game of Knucklebones with an empty board and antagonist
+start using Lonnen-Otis Notation (LON)
+
+This notation maps the state of the game:
+
+Protagonist Antagonist*
+        0 1 2       3 4 5
+        0 1 2       3 4 5
+        0 1 2       3 4 0
+
+Into a single LON String:
+
+    0001112223334445500
+
+"""
+
+STARTING_BOARD_POSITION = "000000000000000000"
+"""The board portion of the LON for the standard Knucklebones starting position
+"""
+
 
 class KnucklebonesGame(object):
     def __init__(self):
@@ -124,10 +145,10 @@ class KnucklebonesBoard(object):
     def state(self):
         """Board state serializes compactly from:
 
-        Protagonist Antagonist*
-        0 1 2       3 4 5
-        0 1 2       3 4 5
-        0 1 2       3 4 0
+        Protagonist* Antagonist
+        0 1 2        3 4 5
+        0 1 2        3 4 5
+        0 1 2        3 4 0
 
         Into a single string:
 
