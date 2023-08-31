@@ -29,20 +29,6 @@ class KnucklebonesGame(object):
     def state(self):
         return self.game.state()
 
-    @classmethod
-    def load(cls, state):
-        game = KnucklebonesBoard()
-        game.turn = bool(state[-1])
-
-        for board in range(2):
-            for column in range(3):
-                for cell in range(3):
-                    game.boards[board][column][cell] = int(
-                        state[(board * 3 * 3) + (column * 3) + cell]
-                    )
-
-        return game
-
     def copy(self):
         return self.load(self.state())
 
@@ -147,3 +133,17 @@ class KnucklebonesBoard(object):
             roll for roll in [column for column in [board for board in self.boards]]
         ]
         return [float(i) for i in (state + [self.turn])]
+
+    @classmethod
+    def load(cls, state):
+        game = KnucklebonesBoard()
+        game.turn = bool(state[-1])
+
+        for board in range(2):
+            for column in range(3):
+                for cell in range(3):
+                    game.boards[board][column][cell] = int(
+                        state[(board * 3 * 3) + (column * 3) + cell]
+                    )
+
+        return game
