@@ -54,7 +54,17 @@ class IllegalMoveError(ValueError):
 
 
 class KnucklebonesBoard(object):
-    def __init__(self):
+    """
+    A board representing the position of the current dice scores.
+
+    This board is initialized with the standard, empty starting position, unless otherwise
+    specified in the optional *board_lon* argument.
+    """
+    def __init__(self, board_lon: Optional[str] = STARTING_POSITION) -> None:
+
+        if board_lon is None:
+            board_lon = STARTING_POSITION
+
         self.boards = [
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
@@ -62,6 +72,35 @@ class KnucklebonesBoard(object):
 
         self.moves = []
         self.turn = PROTAGONIST
+
+        if board_lon is not STARTING_POSITION:
+            self.set_board_lon(board_lon)
+
+    def set_board_lon(self, lon: str) -> None:
+        """
+        Parses *lon* and sets up the board accordingly
+        """
+
+        lon = lon.strip()
+        if len(lon) != 19:
+            raise ValueError(f"expected 3*3*2 +1 values: {lon!r}")
+
+        valid_dice = list(range(7))
+        if any([p not in valid_dice for p in lon[:-1]]):
+            raise ValueError(f"all rolls must be a d6 or 0: {lon[:-1]!r}")
+
+        if lon[-1] not in ["0", "1"]:
+            raise ValueError(f"player must be 0 or 1: {lon[:-1]!r}")
+
+        # load the valid lon
+        self.turn = bool(lon[-1])
+
+        for board in range(2):
+            for column in range(3):
+                for cell in range(3):
+                    self.boards[board][column][cell] = int(
+                        lon[(board * 3 * 3) + (column * 3) + cell]
+                    )
 
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
