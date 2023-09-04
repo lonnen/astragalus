@@ -104,6 +104,15 @@ class KnucklebonesBoard(object):
                         lon[(board * 3 * 3) + (column * 3) + cell]
                     )
 
+    def board_lon(self) -> str:
+        """
+        Gets the board LON (e.g. ``0001112223334445500``).
+        """
+        state = [
+            roll for roll in [column for column in [board for board in self.boards]]
+        ]
+        return "".join([int(i) for i in (state + [self.turn])])
+
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
         board = self.boards[0 if self.turn is PROTAGONIST else 1]
