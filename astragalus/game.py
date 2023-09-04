@@ -113,6 +113,9 @@ class KnucklebonesBoard(object):
         ]
         return "".join([int(i) for i in (state + [self.turn])])
 
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self.board_lon()!r})"
+
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
         board = self.boards[0 if self.turn is PROTAGONIST else 1]
