@@ -53,6 +53,25 @@ class IllegalMoveError(ValueError):
     """Raised when the attempted move is illegal in the current position"""
 
 
+@dataclasses.dataclass
+class Move:
+    """
+    Represents a move as the player who made it, the dice roll, placement, and how many
+    cancellations it caused
+    """
+    player: bool
+    """Which player made the move"""
+
+    roll: int
+    """The value of the dice roll bing placed"""
+
+    column: int
+    """the column where the roll was placed"""
+
+    cancellations: int
+    """how many values were cancelld from the opposing column"""
+
+
 class KnucklebonesBoard(object):
     """
     A board representing the position of the current dice scores.
@@ -118,6 +137,15 @@ class KnucklebonesBoard(object):
 
     def __str__(self) -> str:
         return self.board_lon()
+
+    def copy(self):
+        """Creates a copy of the board."""
+        board = type(self)(None)
+        board.boards = self.boards
+        board.moves = self.moves
+        board.turn = self.turn
+
+        return board
 
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
