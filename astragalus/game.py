@@ -65,6 +65,7 @@ class KnucklebonesBoard(object):
         if board_lon is None:
             board_lon = STARTING_POSITION
 
+        # initialize board in STARTING_POSITION
         self.boards = [
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
@@ -73,6 +74,7 @@ class KnucklebonesBoard(object):
         self.moves = []
         self.turn = PROTAGONIST
 
+        # go through setup if an alternatie is provided
         if board_lon is not STARTING_POSITION:
             self.set_board_lon(board_lon)
 
