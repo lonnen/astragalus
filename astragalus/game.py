@@ -40,8 +40,7 @@ class Outcome:
     winner: Optional[Player]
 
     def result(self) -> str:
-        """Returns the human-readable indicator of the winner
-        """
+        """Returns the human-readable indicator of the winner"""
         return "Protagonist" if self.winner else "Antagonist"
 
 
@@ -59,6 +58,7 @@ class Move:
     Represents a move as the player who made it, the dice roll, placement, and how many
     cancellations it caused
     """
+
     player: bool
     """Which player made the move"""
 
@@ -79,6 +79,7 @@ class KnucklebonesBoard(object):
     This board is initialized with the standard, empty starting position, unless otherwise
     specified in the optional *board_lon* argument.
     """
+
     def __init__(self, board_lon: Optional[str] = STARTING_POSITION) -> None:
 
         if board_lon is None:
