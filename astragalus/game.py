@@ -170,17 +170,15 @@ class KnucklebonesBoard(object):
         # caclulate any placement cancelled out on the opposing board
         other_board = self.boards[opposing_board_number]
 
-        cancelled_positions = [
-            pos for pos, value in enumerate(other_board[column]) if value == dice_roll
-        ]
-
-        # apply the move
-        for cancellation in cancelled_positions:
-            other_board[column][cancellation] = 0
+        cancellations = 0
+        for value in other_board[column]:
+            if value == dice_roll:
+                value = 0
+                cancellations += 1
 
         # cycle turn
+        self.moves.append(Move(self.turn, column + 1, dice_roll, cancellations))
         self.turn = not self.turn
-        self.moves.append([column + 1, dice_roll, *cancelled_positions])
 
     def pop(self) -> None:
         """Restores the previous board position"""
