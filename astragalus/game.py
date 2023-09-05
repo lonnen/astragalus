@@ -135,11 +135,11 @@ class KnucklebonesBoard(object):
         ]
         return "".join(str(r) for r in state)
 
-    def __repr__(self) -> str:
-        return f"{type(self).__name__}({self.board_lon()!r})"
-
     def __str__(self) -> str:
         return self.board_lon()
+
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({self.board_lon()!r})"
 
     def copy(self):
         """Creates a copy of the board."""
