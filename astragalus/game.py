@@ -128,8 +128,9 @@ class KnucklebonesBoard(object):
         """
         Gets the board LON (e.g. ``0001112223334445500``).
         """
-        state = list(chain.from_iterable(chain.from_iterable(self.boards)))
-        +[1 if self.turn else 0]
+        state = list(chain.from_iterable(chain.from_iterable(self.boards))) + [
+            1 if self.turn else 0
+        ]
         return "".join(str(r) for r in state)
 
     def __repr__(self) -> str:
