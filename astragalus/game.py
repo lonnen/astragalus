@@ -107,11 +107,13 @@ class KnucklebonesBoard(object):
         if len(lon) != 19:
             raise ValueError(f"expected 3*3*2 +1 values: {lon!r}")
 
-        valid_dice = list(range(7))
-        if any([p not in valid_dice for p in lon[:-1]]):
+        # string into a list
+        lon = [int(x) for x in [*lon]]
+
+        if any([p not in set(range(7)) for p in lon[:-1]]):
             raise ValueError(f"all rolls must be a d6 or 0: {lon[:-1]!r}")
 
-        if lon[-1] not in ["0", "1"]:
+        if lon[-1] not in [0, 1]:
             raise ValueError(f"player must be 0 or 1: {lon[:-1]!r}")
 
         # load the valid lon
