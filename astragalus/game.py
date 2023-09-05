@@ -4,6 +4,7 @@ A library for implementin and exploring states of the minigame Knucklebones from
 
 from collections import Counter
 import dataclasses
+from itertools import chain
 
 from typing import List, Tuple, Literal, Optional
 
@@ -81,7 +82,6 @@ class KnucklebonesBoard(object):
     """
 
     def __init__(self, board_lon: Optional[str] = STARTING_POSITION) -> None:
-
         if board_lon is None:
             board_lon = STARTING_POSITION
 
@@ -128,10 +128,9 @@ class KnucklebonesBoard(object):
         """
         Gets the board LON (e.g. ``0001112223334445500``).
         """
-        state = [
-            roll for roll in [column for column in [board for board in self.boards]]
-        ]
-        return "".join([int(i) for i in (state + [self.turn])])
+        state = list(chain.from_iterable(chain.from_iterable(self.boards)))
+        +[1 if self.turn else 0]
+        return "".join(str(r) for r in state)
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self.board_lon()!r})"
@@ -167,15 +166,17 @@ class KnucklebonesBoard(object):
         """apply a move to the board state and push the change to a list of moves"""
         column -= 1
 
-        board = self.get_board()
-        board_column = board[column]
-        board_column[board_column.index(0)] = dice_roll
+        board_column = self.get_board()[column]
+        try:
+            board_column[board_column.index(0)] = dice_roll
+        except ValueError:
+            raise IllegalMoveError
 
         # caclulate any placement cancelled out on the opposing board
-        other_board = self.get_board(not self.turn)
+        other_column = self.get_board(not self.turn)[column]
 
         cancellations = 0
-        for value in other_board[column]:
+        for value in other_column:
             if value == dice_roll:
                 value = 0
                 cancellations += 1
