@@ -3,6 +3,9 @@ import unittest
 from astragalus import KnucklebonesBoard, ANTAGONIST, STARTING_POSITION
 
 
+NEW_STARTING_POSITION = "0001112223334445500"
+
+
 class TestBoard(unittest.TestCase):
     state_log = [
         # roll, column, antagonist total, protagonist total, columns (0-based)
@@ -57,8 +60,13 @@ class TestBoard(unittest.TestCase):
         board = KnucklebonesBoard()
         self.assertEqual(str(board), STARTING_POSITION)
         new_start = "0001112223334445500"
-        board = KnucklebonesBoard(new_start)
-        self.assertEqual(str(board), new_start)
+        board = KnucklebonesBoard(NEW_STARTING_POSITION)
+        self.assertEqual(str(board), NEW_STARTING_POSITION)
+
+    def test_repr(self):
+        """a board should initialize empty"""
+        board = KnucklebonesBoard(NEW_STARTING_POSITION)
+        self.assertEqual(repr(board), "KnucklebonesBoard('0001112223334445500')")
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
