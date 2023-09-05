@@ -87,8 +87,8 @@ class KnucklebonesBoard(object):
 
         # initialize board in STARTING_POSITION
         self.boards = [
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],  # ANTAGONIST
+            [[0, 0, 0], [0, 0, 0], [0, 0, 0]],  # PROTAGONIST
         ]
 
         self.moves = []
@@ -148,9 +148,15 @@ class KnucklebonesBoard(object):
 
         return board
 
+    def get_board(self, agonist: Optional[Player]):
+        """Return the board for either the antagonist or protagonist"""
+        if agonist is None:
+            agonist = self.turn
+        return self.boards[1 if agonist else 0]
+
     def generate_legal_moves(self) -> List[int]:
         """Return the index of any row with space for another number"""
-        board = self.boards[0 if self.turn is PROTAGONIST else 1]
+        board = self.get_board()
         return tuple(i + 1 for (i, col) in enumerate(board) if 0 in col)
 
     def is_game_over(self) -> bool:
@@ -160,15 +166,13 @@ class KnucklebonesBoard(object):
     def push(self, column, dice_roll) -> None:
         """apply a move to the board state and push the change to a list of moves"""
         column -= 1
-        board_number = 0 if self.turn is PROTAGONIST else 1
-        opposing_board_number = (board_number + 1) % 2
 
-        board = self.boards[board_number]
+        board = self.get_board()
         board_column = board[column]
         board_column[board_column.index(0)] = dice_roll
 
         # caclulate any placement cancelled out on the opposing board
-        other_board = self.boards[opposing_board_number]
+        other_board = self.get_board(not self.turn)
 
         cancellations = 0
         for value in other_board[column]:
@@ -186,16 +190,13 @@ class KnucklebonesBoard(object):
         column -= 1
         self.turn = not self.turn
 
-        board_number = 0 if self.turn is PROTAGONIST else 1
-        opposing_board_number = (board_number + 1) % 2
-
-        board_column = self.boards[board_number][column]
+        board_column = self.get_board()[column]
 
         # undo the move
         board_column[board_column.index(dice_roll)] = 0
 
         # undo the cancellations
-        other_board = self.boards[opposing_board_number]
+        other_board = self.get_board(not self.turn)
         other_column = other_board[column]
         for _ in cancelled_positions:
             other_column[other_column.index(0)] = dice_roll
