@@ -59,7 +59,6 @@ class TestBoard(unittest.TestCase):
         """a board should initialize empty"""
         board = KnucklebonesBoard()
         self.assertEqual(str(board), STARTING_POSITION)
-        new_start = "0001112223334445500"
         board = KnucklebonesBoard(NEW_STARTING_POSITION)
         self.assertEqual(str(board), NEW_STARTING_POSITION)
 
@@ -67,6 +66,14 @@ class TestBoard(unittest.TestCase):
         """a board should initialize empty"""
         board = KnucklebonesBoard(NEW_STARTING_POSITION)
         self.assertEqual(repr(board), "KnucklebonesBoard('0001112223334445500')")
+
+    def test_push(self):
+        """push should mutate the board"""
+        board = KnucklebonesBoard()
+        board.push(2, 6)
+        self.assertEqual(str(board), "0006000000000000001")
+        board.push(2, 5)
+        self.assertEqual(str(board), "0006000000005000000")
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
