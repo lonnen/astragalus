@@ -1,6 +1,6 @@
 import unittest
 
-from astragalus import KnucklebonesBoard, ANTAGONIST
+from astragalus import KnucklebonesBoard, ANTAGONIST, STARTING_POSITION
 
 
 class TestBoard(unittest.TestCase):
@@ -51,6 +51,11 @@ class TestBoard(unittest.TestCase):
         (1, 2, 46, 27, (2,)),
     ]
     """A game played in Jul 6, 2023 against Shrumy, ending in victory for Shrumy"""
+
+    def test_init(self):
+        """a board should initialize empty"""
+        board = KnucklebonesBoard()
+        self.assertEqual(str(board), STARTING_POSITION)
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
