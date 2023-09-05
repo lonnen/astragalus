@@ -92,7 +92,7 @@ class KnucklebonesBoard(object):
         ]
 
         self.moves = []
-        self.turn = PROTAGONIST
+        self.turn = ANTAGONIST
 
         # go through setup if an alternatie is provided
         if board_lon is not STARTING_POSITION:
