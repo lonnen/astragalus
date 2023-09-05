@@ -148,7 +148,7 @@ class KnucklebonesBoard(object):
 
         return board
 
-    def get_board(self, agonist: Optional[Player]):
+    def get_board(self, agonist: Optional[Player] = None):
         """Return the board for either the antagonist or protagonist"""
         if agonist is None:
             agonist = self.turn
