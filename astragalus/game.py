@@ -175,7 +175,7 @@ class KnucklebonesBoard(object):
         except ValueError:
             raise IllegalMoveError
 
-        # caclulate any placement cancelled out on the opposing board
+        # caclulate any cancellations out on the opposing board
         other_column = self.get_board(not self.turn)[column]
 
         cancellations = 0
