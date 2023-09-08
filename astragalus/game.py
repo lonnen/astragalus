@@ -214,6 +214,13 @@ class KnucklebonesBoard(object):
         for _ in cancelled_positions:
             other_column[other_column.index(0)] = dice_roll
 
+    def outcome(self) -> Optional[Outcome]:
+        """Check if the game is over"""
+        if self.is_game_over():
+            protagonist_score, antagonist_score = self.score()
+            return Outcome(True, protagonist_score > antagonist_score, None)
+        return None
+
     def scores(self) -> Tuple[int, int]:
         """The sum of the values of each dice multiplied by the number of
         dice of that value in its column, i.e. 1-2-3 is 1x1 + 2x1 + 3x1 = 6,
