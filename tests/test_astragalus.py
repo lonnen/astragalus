@@ -74,6 +74,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(str(board), "0006000000000000001")
         board.push(2, 5)
         self.assertEqual(str(board), "0006000000005000000")
+        board.push(2, 5)
+        self.assertEqual(str(board), "0006500000000000001")
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a

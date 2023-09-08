@@ -176,13 +176,22 @@ class KnucklebonesBoard(object):
             raise IllegalMoveError
 
         # caclulate any cancellations out on the opposing board
-        other_column = self.get_board(not self.turn)[column]
+        other_board = self.get_board(not self.turn)
+        other_column = other_board[column]
 
+        # this loop is unrolled, resulting in some duplication
+        # but a loop that actually mutates in place is not much
+        # prettier
         cancellations = 0
-        for value in other_column:
-            if value == dice_roll:
-                value = 0
-                cancellations += 1
+        if other_column[0] == dice_roll:
+            other_column[0] = 0
+            cancellations += 1
+        if other_column[1] == dice_roll:
+            other_column[1] = 0
+            cancellations += 1
+        if other_column[2] == dice_roll:
+            other_column[2] = 0
+            cancellations += 1
 
         # cycle turn
         self.moves.append(Move(self.turn, column + 1, dice_roll, cancellations))
