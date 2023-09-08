@@ -74,8 +74,23 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(str(board), "0006000000000000001")
         board.push(2, 5)
         self.assertEqual(str(board), "0006000000005000000")
+        # this should cancel an opposing value
         board.push(2, 5)
         self.assertEqual(str(board), "0006500000000000001")
+
+        # load values
+        board.push(1, 1)
+        self.assertEqual(str(board), "0006500001000000000")
+        board.push(2, 1)
+        self.assertEqual(str(board), "0006510001000000001")
+
+        # same value twice should cause no problems
+        board.push(1, 1)
+        self.assertEqual(str(board), "0006510001100000000")
+
+        # this should overflow column 2, causing an illegal push
+        with pytest.raises(ValueError):
+            board.push(2, 6)
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
