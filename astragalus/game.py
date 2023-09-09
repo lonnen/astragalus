@@ -153,7 +153,10 @@ class KnucklebonesBoard(object):
         return board
 
     def get_board(self, agonist: Optional[Player] = None):
-        """Return the board for either the antagonist or protagonist"""
+        """Return the board for either the antagonist or protagonist
+
+        :param agonist: the player whose board should be retrieved, or the current player if None
+        """
         if agonist is None:
             agonist = self.turn
         return self.boards[1 if agonist else 0]
@@ -171,7 +174,11 @@ class KnucklebonesBoard(object):
         return False
 
     def push(self, column, dice_roll) -> None:
-        """apply a move to the board state and push the change to a list of moves"""
+        """apply a move to the board state and push the change to a list of moves
+
+        :param column: 1, 2, or 3
+        :param dice_roll: 1, 2, 3, 4, 5, or 6
+        """
         column -= 1
 
         board_column = self.get_board()[column]
