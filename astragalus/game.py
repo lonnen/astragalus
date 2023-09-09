@@ -219,7 +219,7 @@ class KnucklebonesBoard(object):
         for _ in cancelled_positions:
             other_column[other_column.index(0)] = dice_roll
 
-    def outcome(self) -> Optional[Outcome]:
+    def outcome(self) -> Outcome:
         """Check if the game is over"""
         if self.is_game_over():
             protagonist_score, antagonist_score = self.scores()
