@@ -5,6 +5,7 @@ from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST, STARTING_POSI
 
 NEW_STARTING_POSITION = "0001112223334445500"
 
+
 class TestBoard(unittest.TestCase):
     state_log = [
         # roll, column, antagonist total, protagonist total, columns (0-based)
@@ -92,8 +93,7 @@ class TestBoard(unittest.TestCase):
             board.push(2, 6)
 
     def test_outcome(self):
-        """verify that the board can detect an accurate game outcome
-        """
+        """verify that the board can detect an accurate game outcome"""
         # ANTAGONIST has all the points, board full
         outcome = KnucklebonesBoard("0000000002222222221").outcome()
         self.assertEqual(outcome.termination, True)
@@ -109,6 +109,18 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(outcome.termination, False)
         self.assertEqual(outcome.winner, None)
         self.assertEqual(outcome.result(), None)
+
+    def test_score(self):
+        """verify that the board can accurately tally game stores"""
+        (p, a) = KnucklebonesBoard("0000000002222222221").scores()
+        self.assertEqual(p, 0)
+        self.assertEqual(a, 54)
+        (p, a) = KnucklebonesBoard("3333333332222222200").scores()
+        self.assertEqual(p, 81)
+        self.assertEqual(a, 44)
+        (p, a) = KnucklebonesBoard("3333333302222222201").scores()
+        self.assertEqual(p, 66)
+        self.assertEqual(a, 44)
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
