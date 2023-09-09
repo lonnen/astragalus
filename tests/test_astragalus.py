@@ -1,10 +1,9 @@
 import unittest
 
-from astragalus import KnucklebonesBoard, ANTAGONIST, STARTING_POSITION
+from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST, STARTING_POSITION
 
 
 NEW_STARTING_POSITION = "0001112223334445500"
-
 
 class TestBoard(unittest.TestCase):
     state_log = [
@@ -91,6 +90,25 @@ class TestBoard(unittest.TestCase):
         # this should overflow column 2, causing an illegal push
         with self.assertRaises(ValueError):
             board.push(2, 6)
+
+    def test_outcome(self):
+        """verify that the board can detect an accurate game outcome
+        """
+        # ANTAGONIST has all the points, board full
+        outcome = KnucklebonesBoard("0000000002222222221").outcome()
+        self.assertEqual(outcome.termination, True)
+        self.assertEqual(outcome.winner, ANTAGONIST)
+        self.assertEqual(outcome.result(), "Antagonist")
+        # Both players have some points, PROTAGONIST has more
+        outcome = KnucklebonesBoard("3333333332222222200").outcome()
+        self.assertEqual(outcome.termination, True)
+        self.assertEqual(outcome.winner, PROTAGONIST)
+        self.assertEqual(outcome.result(), "Protagonist")
+        # Neither board is full, so there is no outcome yet
+        outcome = KnucklebonesBoard("3333333302222222201").outcome()
+        self.assertEqual(outcome.termination, False)
+        self.assertEqual(outcome.winner, None)
+        self.assertEqual(outcome.result(), None)
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
