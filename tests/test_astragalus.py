@@ -89,7 +89,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(str(board), "0006510001100000000")
 
         # this should overflow column 2, causing an illegal push
-        with pytest.raises(ValueError):
+        with self.assertRaises(ValueError):
             board.push(2, 6)
 
     def test_game(self):
