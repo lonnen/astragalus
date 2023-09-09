@@ -8,7 +8,7 @@ NEW_STARTING_POSITION = "0001112223334445500"
 
 class TestBoard(unittest.TestCase):
     state_log = [
-        # roll, column, antagonist total, protagonist total, columns (0-based)
+        # roll, column, antagonist total, protagonist total, column sums
         (1, 1, 1, 0, (1, 2, 3)),
         (1, 1, 0, 1, (1, 2, 3)),
         (6, 2, 6, 1, (1, 2, 3)),
