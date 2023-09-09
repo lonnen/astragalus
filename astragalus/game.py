@@ -40,8 +40,10 @@ class Outcome:
     termination: bool
     winner: Optional[Player]
 
-    def result(self) -> str:
-        """Returns the human-readable indicator of the winner"""
+    def result(self) -> Optional[str]:
+        """Returns the human-readable indicator of the winner, or None if there is no winner"""
+        if self.winner is None:
+            return None
         return "Protagonist" if self.winner else "Antagonist"
 
 
@@ -163,7 +165,10 @@ class KnucklebonesBoard(object):
 
     def is_game_over(self) -> bool:
         """the game is over when either board is full"""
-        return any(all(board) for board in self.boards)
+        for board in self.boards:
+            if all(all(rows) for rows in board):
+                return True
+        return False
 
     def push(self, column, dice_roll) -> None:
         """apply a move to the board state and push the change to a list of moves"""
@@ -217,9 +222,9 @@ class KnucklebonesBoard(object):
     def outcome(self) -> Optional[Outcome]:
         """Check if the game is over"""
         if self.is_game_over():
-            protagonist_score, antagonist_score = self.score()
-            return Outcome(True, protagonist_score > antagonist_score, None)
-        return None
+            protagonist_score, antagonist_score = self.scores()
+            return Outcome(True, (protagonist_score > antagonist_score))
+        return Outcome(False, None)
 
     def scores(self) -> Tuple[int, int]:
         """The sum of the values of each dice multiplied by the number of
