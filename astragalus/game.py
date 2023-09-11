@@ -65,11 +65,11 @@ class Move:
     player: bool
     """Which player made the move"""
 
-    roll: int
-    """The value of the dice roll bing placed"""
-
     column: int
     """the column where the roll was placed"""
+
+    roll: int
+    """The value of the dice roll bing placed"""
 
     cancellations: int
     """how many values were cancelld from the opposing column"""
@@ -214,21 +214,21 @@ class KnucklebonesBoard(object):
         move = self.moves.pop()
         player, column, dice_roll, cancellations = (
             move.player,
-            move.column,
+            move.column - 1,  # columns are written 1-indexed but stored 0-indexed
             move.roll,
             move.cancellations,
         )
 
-        # columns are written 1-indexed but stored 0-indexed
-        column -= 1
+        board_column = self.get_board(player)[column]
 
-        # reverse the turn
-        self.turn = not player
-
-        board_column = self.get_board()[column]
+        # we're now back to the turn of the player who made the move
+        self.turn = player
 
         # undo the move
-        board_column[board_column.index(dice_roll)] = 0
+        try:
+            board_column[board_column.index(dice_roll)] = 0
+        except ValueError:
+            raise IllegalMoveError(f"There is no {dice_roll!r} in {board_column!r}")
 
         # undo the cancellations
         other_board = self.get_board(not self.turn)

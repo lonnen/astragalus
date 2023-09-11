@@ -122,6 +122,16 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(p, 66)
         self.assertEqual(a, 44)
 
+    def test_pop(self):
+        """Verify that the game board can pop a move off the stack, reversing
+        both the dice placement and any cancellations
+        """
+        board = KnucklebonesBoard()
+        board.push(1, 2)
+        self.assertEqual(board.board_lon(), '2000000000000000001')
+        board.pop()
+        self.assertEqual(board.board_lon(), '0000000000000000000')
+
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
         playthrough
@@ -131,9 +141,9 @@ class TestBoard(unittest.TestCase):
             board.push(column, roll)
             self.assertEqual(board.scores(), [antagonist_total, protagonist_total])
         self.assertTrue(board.is_game_over())
-        self.assertTrue(board.turn == ANTAGONIST)
+        self.assertTrue(board.turn == PROTAGONIST)
 
-    def test_pop(self):
+    def test_ungame(self):
         """verify that a game in its end state can be undone step by step"""
         board = KnucklebonesBoard()
         for roll, column, _, _, _ in self.state_log:
