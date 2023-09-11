@@ -301,31 +301,3 @@ class KnucklebonesBoard(object):
                     )
 
         return game
-
-
-class KnucklebonesGame(object):
-    def __init__(self):
-        self.game = KnucklebonesBoard()
-
-    def valid_moves(self):
-        return self.game.generate_legal_moves()
-
-    def over(self):
-        return self.game.is_game_over()
-
-    def score(self):
-        """Positive score means  is ahead, negative score means player 2"""
-        protagonist, antagonist = self.game.scores()
-        return protagonist - antagonist
-
-    def make_move(self, move):
-        self.moves.push()
-
-    def undo_move(self):
-        self.moves.pop()
-
-    def state(self):
-        return self.game.state()
-
-    def copy(self):
-        return self.load(self.state())
