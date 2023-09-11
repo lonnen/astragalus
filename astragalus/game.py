@@ -173,13 +173,16 @@ class KnucklebonesBoard(object):
                 return True
         return False
 
-    def push(self, column, dice_roll) -> None:
+    def push(self, column: int, dice_roll: int) -> None:
         """apply a move to the board state and push the change to a list of moves
 
         :param column: 1, 2, or 3
         :param dice_roll: 1, 2, 3, 4, 5, or 6
         """
         column -= 1
+
+        if not (dice_roll > 0 and dice_roll < 6):
+            raise IllegalMoveError(f"Dice Rolls must be a 6, not {dice_roll}!r")
 
         board_column = self.get_board()[column]
         try:
