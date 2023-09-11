@@ -185,7 +185,7 @@ class KnucklebonesBoard(object):
         try:
             board_column[board_column.index(0)] = dice_roll
         except ValueError:
-            raise IllegalMoveError
+            raise IllegalMoveError(f"There is no empty value in {board_column}!r")
 
         # caclulate any cancellations out on the opposing board
         other_board = self.get_board(not self.turn)
@@ -209,11 +209,21 @@ class KnucklebonesBoard(object):
         self.moves.append(Move(self.turn, column + 1, dice_roll, cancellations))
         self.turn = not self.turn
 
-    def pop(self) -> None:
+    def pop(self) -> Move:
         """Restores the previous board position"""
-        column, dice_roll, *cancelled_positions = self.moves.pop()
+        move = self.moves.pop()
+        player, column, dice_roll, cancellations = (
+            move.player,
+            move.column,
+            move.roll,
+            move.cancellations,
+        )
+
+        # columns are written 1-indexed but stored 0-indexed
         column -= 1
-        self.turn = not self.turn
+
+        # reverse the turn
+        self.turn = not player
 
         board_column = self.get_board()[column]
 
@@ -223,8 +233,13 @@ class KnucklebonesBoard(object):
         # undo the cancellations
         other_board = self.get_board(not self.turn)
         other_column = other_board[column]
-        for _ in cancelled_positions:
-            other_column[other_column.index(0)] = dice_roll
+        for _ in range(cancellations):
+            try:
+                other_column[other_column.index(0)] = dice_roll
+            except ValueError:
+                raise IllegalMoveError(f"There is no empty value in {other_column!r}")
+
+        return move
 
     def outcome(self) -> Outcome:
         """Check if the game is over"""
