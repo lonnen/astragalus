@@ -131,7 +131,7 @@ class TestBoard(unittest.TestCase):
         board.push(1, 2)
         self.assertEqual(board.board_lon(), '2000000000000000001')
         board.pop()
-        self.assertEqual(board.board_lon(), '0000000000000000000')
+        self.assertEqual(board.board_lon(), STARTING_POSITION)
 
         # reset
         board.set_board_lon(STARTING_POSITION)
@@ -178,7 +178,11 @@ class TestBoard(unittest.TestCase):
             self.assertEqual(board.scores(), [ant_total, pro_total])
 
         self.assertEqual(len(board.moves), 1)
-        self.assertEqual(board.turn, ANTAGONIST)
+        self.assertEqual(board.turn, PROTAGONIST)
+        self.assertEqual(board.board_lon(), '1000000000000000001')
+
+        board.pop()
+        self.assertEqual(board.board_lon(), STARTING_POSITION)
 
     def test_generate_legal_moves(self):
         """verify that the board can generate complete and accurate available moves"""
