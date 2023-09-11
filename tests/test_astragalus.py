@@ -131,6 +131,11 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.board_lon(), '2000000000000000001')
         board.pop()
         self.assertEqual(board.board_lon(), '0000000000000000000')
+        board.push(1, 2)
+        board.push(1, 2)
+        self.assertEqual(board.board_lon(), '0000000002000000000')
+        board.pop()
+        self.assertEqual(board.board_lon(), '2000000000000000001')
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
