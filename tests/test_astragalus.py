@@ -127,15 +127,33 @@ class TestBoard(unittest.TestCase):
         both the dice placement and any cancellations
         """
         board = KnucklebonesBoard()
+        # pop should undo dice placement
         board.push(1, 2)
         self.assertEqual(board.board_lon(), '2000000000000000001')
         board.pop()
         self.assertEqual(board.board_lon(), '0000000000000000000')
+
+        # reset
+        board.set_board_lon(STARTING_POSITION)
+
+        # pop should undo opponents cancelled roll
         board.push(1, 2)
         board.push(1, 2)
         self.assertEqual(board.board_lon(), '0000000002000000000')
         board.pop()
         self.assertEqual(board.board_lon(), '2000000000000000001')
+
+        # reset
+        board.set_board_lon(STARTING_POSITION)
+
+        # pop should undo multiple cancelled rolls
+        board.push(3, 3)
+        board.push(1, 1)
+        board.push(3, 3)
+        board.push(3, 3)
+        self.assertEqual(board.board_lon(), '0000000001000003000')
+        board.pop()
+        self.assertEqual(board.board_lon(), '0000003301000000001')
 
     def test_game(self):
         """verify that the game board can match the inputs and outputs of a
