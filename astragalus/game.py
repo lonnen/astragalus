@@ -182,7 +182,7 @@ class KnucklebonesBoard(object):
         column -= 1
 
         if not (dice_roll > 0 and dice_roll < 6):
-            raise IllegalMoveError(f"Dice Rolls must be a 6, not {dice_roll!s}")
+            raise IllegalMoveError(f"Dice Rolls must be a d6, not {dice_roll!s}")
 
         board_column = self.get_board()[column]
         try:
