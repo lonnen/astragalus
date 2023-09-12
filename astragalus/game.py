@@ -182,13 +182,13 @@ class KnucklebonesBoard(object):
         column -= 1
 
         if not (dice_roll > 0 and dice_roll < 6):
-            raise IllegalMoveError(f"Dice Rolls must be a 6, not {dice_roll}!r")
+            raise IllegalMoveError(f"Dice Rolls must be a 6, not {dice_roll!s}")
 
         board_column = self.get_board()[column]
         try:
             board_column[board_column.index(0)] = dice_roll
         except ValueError:
-            raise IllegalMoveError(f"There is no empty value in {board_column}!r")
+            raise IllegalMoveError(f"There is no empty value in {board_column!s}")
 
         # caclulate any cancellations out on the opposing board
         other_board = self.get_board(not self.turn)
