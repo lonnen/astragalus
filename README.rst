@@ -12,15 +12,33 @@ An set of utilities for playing `Cult of the Lamb <https://www.cultofthelamb.com
 Install
 =======
 
-To get started, don't. This isn't even implemented.
+To install astragalus, run:
 
 .. code-block:: shell
 
-    $ exit 1
+    $ pip install git+https://github.com/lonnen/astragalus.git
 
-Usage
-=====
+Example Usage
+=============
+
+Here's the basic idea:
 
 .. code-block:: python
 
-    >>> # pass
+    >>> from random import randint
+    >>> from astragalus import KnucklebonesBoard
+    >>> board = KnucklebonesBoard()
+    >>> column = 2
+    >>> dice_roll = randint(1, 6)
+    >>> board.push(column, dice_roll)
+    >>> print(board)
+
+.. code-block:: python
+
+    "0006000000000000001"
+
+Status
+======
+
+The board is implemented with all the constraintes necessary to make legal moves, but the game is
+is not implemented. For the moment you'll need to implement rolling your own `d6` every round.
