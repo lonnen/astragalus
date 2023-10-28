@@ -4,10 +4,6 @@ ASTRAGALUS
 
 An set of utilities for playing `Cult of the Lamb <https://www.cultofthelamb.com/>`_'s minigame `Knucklebones <https://cult-of-the-lamb.fandom.com/wiki/Knucklebones>`_.
 
-.. image:: https://github.com/niklasf/python-chess/workflows/Test/badge.svg
-    :target: https://github.com/lonnen/astragalus/actions
-    :alt: Test status
-
 :Code:          https://github.com/lonnen/astragalus
 :Issues:        https://github.com/lonnen/astragalus/issues
 :Releases:      https://pypi.org/project/astragalus/#history
