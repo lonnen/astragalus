@@ -40,5 +40,5 @@ Here's the basic idea:
 Status
 ======
 
-The board is implemented with all the constraintes necessary to make legal moves, but the game is
-is not implemented. For the moment you'll need to implement rolling your own `d6` every round.
+The board is implemented with all the constraints necessary to make legal moves, but the game is
+is not fully implemented. For the moment you'll need to implement rolling your own `d6` every round.
