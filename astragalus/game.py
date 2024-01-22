@@ -81,6 +81,12 @@ class KnucklebonesBoard(object):
 
     This board is initialized with the standard, empty starting position, unless otherwise
     specified in the optional *board_lon* argument.
+
+    note: in Cult of the Lamb (CotL), the minigame board always puts new dice rolls at the lowest
+    space available, such that columns are partially sorted with all empty values at the
+    end. Relative position within columns does not matter for scoring, and this board accepts
+    positions that could never occur in the CotL minigame so long as the array has the correct
+    length and contains legal values at each individual position.
     """
 
     def __init__(self, board_lon: Optional[str] = STARTING_POSITION) -> None:
