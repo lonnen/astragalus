@@ -13,7 +13,7 @@ PLAYERS = [PROTAGONIST, ANTAGONIST] = [True, False]
 PlayerName = Literal["protagonist", "antagonist"]
 PLAYER_NAMES: List[PlayerName] = ["protagonist", "antagonist"]
 
-STARTING_POSITION = "0000000000000000000"
+STARTING_BOARD_LON = "0000000000000000000"
 """The standard starting position for a game of Knucklebones with an empty board and antagonist
 start using Lonnen-Otis Notation (LON)
 
@@ -89,11 +89,11 @@ class KnucklebonesBoard(object):
     length and contains legal values at each individual position.
     """
 
-    def __init__(self, board_lon: Optional[str] = STARTING_POSITION) -> None:
+    def __init__(self, board_lon: Optional[str] = STARTING_BOARD_LON) -> None:
         if board_lon is None:
-            board_lon = STARTING_POSITION
+            board_lon = STARTING_BOARD_LON
 
-        # initialize board in STARTING_POSITION
+        # initialize board in STARTING_BOARD_LON
         self.boards = [
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],  # ANTAGONIST
             [[0, 0, 0], [0, 0, 0], [0, 0, 0]],  # PROTAGONIST
@@ -103,7 +103,7 @@ class KnucklebonesBoard(object):
         self.turn = ANTAGONIST
 
         # go through setup if an alternatie is provided
-        if board_lon is not STARTING_POSITION:
+        if board_lon is not STARTING_BOARD_LON:
             self.set_board_lon(board_lon)
 
     def set_board_lon(self, lon: str) -> None:

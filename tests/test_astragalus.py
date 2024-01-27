@@ -1,9 +1,9 @@
 import unittest
 
-from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST, STARTING_POSITION
+from astragalus import KnucklebonesBoard, PROTAGONIST, ANTAGONIST, STARTING_BOARD_LON
 
 
-NEW_STARTING_POSITION = "0001112223334445500"
+NEW_STARTING_BOARD_LON = "0001112223334445500"
 
 
 class TestBoard(unittest.TestCase):
@@ -58,13 +58,13 @@ class TestBoard(unittest.TestCase):
     def test_init(self):
         """a board should initialize empty"""
         board = KnucklebonesBoard()
-        self.assertEqual(str(board), STARTING_POSITION)
-        board = KnucklebonesBoard(NEW_STARTING_POSITION)
-        self.assertEqual(str(board), NEW_STARTING_POSITION)
+        self.assertEqual(str(board), STARTING_BOARD_LON)
+        board = KnucklebonesBoard(NEW_STARTING_BOARD_LON)
+        self.assertEqual(str(board), NEW_STARTING_BOARD_LON)
 
     def test_repr(self):
         """a board should initialize empty"""
-        board = KnucklebonesBoard(NEW_STARTING_POSITION)
+        board = KnucklebonesBoard(NEW_STARTING_BOARD_LON)
         self.assertEqual(repr(board), "KnucklebonesBoard('0001112223334445500')")
 
     def test_push(self):
@@ -131,10 +131,10 @@ class TestBoard(unittest.TestCase):
         board.push(1, 2)
         self.assertEqual(board.board_lon(), "2000000000000000001")
         board.pop()
-        self.assertEqual(board.board_lon(), STARTING_POSITION)
+        self.assertEqual(board.board_lon(), STARTING_BOARD_LON)
 
         # reset
-        board.set_board_lon(STARTING_POSITION)
+        board.set_board_lon(STARTING_BOARD_LON)
 
         # pop should undo opponents cancelled roll
         board.push(1, 2)
@@ -144,7 +144,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.board_lon(), "2000000000000000001")
 
         # reset
-        board.set_board_lon(STARTING_POSITION)
+        board.set_board_lon(STARTING_BOARD_LON)
 
         # pop should undo multiple cancelled rolls
         board.push(3, 3)
@@ -182,7 +182,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.board_lon(), "1000000000000000001")
 
         board.pop()
-        self.assertEqual(board.board_lon(), STARTING_POSITION)
+        self.assertEqual(board.board_lon(), STARTING_BOARD_LON)
 
     def test_generate_legal_moves(self):
         """verify that the board can generate complete and accurate available moves"""
