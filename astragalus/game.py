@@ -7,13 +7,14 @@ from .board import KnucklebonesBoard
 
 class KnucklebonesGame(object):
     def __init__(self):
+        self.game = KnucklebonesBoard()
         pass
 
     def valid_moves(self):
-        raise NotImplementedError()
+        return self.game.generate_legal_moves()
 
     def over(self):
-        return False
+        return self.game.is_game_over()
 
     def make_move(self, move):
         raise NotImplementedError()
